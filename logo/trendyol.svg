@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="140" viewBox="0 0 400 140" role="img" aria-label="Trendyol Yemek">
+  <defs>
+    <style>
+      .bg { fill: #f28b00; }
+      .txt { fill: #ffffff; font-family: 'Arial Black', Arial, sans-serif; font-size: 34px; font-weight: 700; }
+    </style>
+  </defs>
+  <rect class="bg" width="400" height="140" rx="12" />
+  <text class="txt" x="50%" y="55%" dominant-baseline="middle" text-anchor="middle">Trendyol Yemek</text>
+</svg>
+

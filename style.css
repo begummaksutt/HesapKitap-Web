@@ -1,0 +1,713 @@
+/* Genel Stiller */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+
+body{
+    body {
+        
+        background-image: url('logo/1111.png'); /* Arka plan resminizin yolu */
+        background-position: center; /* Resmi ortala */
+        background-repeat: no-repeat; /* Resmi tekrarlama */
+        background-attachment: fixed; 
+    
+
+        
+    }
+}
+
+/* Navbar Stilleri */
+.navbar {
+    background-color: white;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+}
+
+.logo {
+    height:40px;
+    width:120px;
+}
+
+.login-button {
+    background-color: #f84da8;
+    color: white;
+    border: none;
+    padding: 0.5rem 1.5rem;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s;
+    text-decoration: none;
+}
+
+.login-button:hover {
+    background-color: #e63d8c;
+}
+
+/* Container ve Header */
+.container {
+    position: relative;
+    width:100%;/* Genişliği tam ekran yap */
+    max-width: 100%; /* Maksimum genişlik */
+    height: auto; /* Yüksekliği içeriğe göre ayarla */
+    margin: 50 auto 0;
+    padding: 2rem;
+    background-color: rgba(255, 255, 255, 0.9); /* Yarı saydam beyaz arka plan */
+    border-radius: 15px; /* Köşeleri yuvarla */
+    
+}
+
+header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.main-title {
+    color: #f84da8;
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+}
+
+.scrolling-text-container {
+    overflow: hidden;
+    height: 80px;
+}
+
+.scrolling-text {
+    font-size:32px;
+    font-weight:bold;
+    width:100%;
+    white-space:nowrap;
+    overflow:hidden;
+    display:inline-block;
+    animation:scroll 8s linear infinite;
+   
+}
+
+@keyframes scroll {
+    from {
+        transform: translateX(100%);
+    }
+    to {
+        transform: translateX(-100%);
+    }
+}
+
+/* Buton Stilleri */
+.main-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 3rem;
+}
+
+.blue-button {
+    background-color: #f84da8;
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    font-weight: 600;
+    transition: all 0.3s;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.blue-button:hover {
+    background-color: #f84da8;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+/* Mutfaklar Bölümü */
+.cuisines {
+    text-align: center;
+}
+
+.section-title {
+    color: #333;
+    margin-bottom: 2rem;
+    font-size: 2rem;
+}
+
+.cuisine-buttons {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.gray-button {
+    background-color: white;
+    color: #333;
+    border: 1px solid #ddd;
+    padding: 1rem;
+    border-radius: 15px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.gray-button:hover {
+    background-color: #f0f0f0;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.gray-button i {
+    font-size: 1.2rem;
+    color: #f84da8;
+}
+
+/* Responsive Tasarım */
+
+
+@media (max-width: 768px) {
+    .main-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .blue-button {
+        width: 100%;
+        max-width: 300px;
+    }
+
+    .main-title {
+        font-size: 2.5rem;
+    }
+
+    .sliding-text {
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .navbar {
+        padding: 0.5rem 1rem;
+    }
+
+    .logo {
+        height: 30px;
+    }
+
+    .login-button {
+        padding: 0.3rem 1rem;
+        font-size: 0.9rem;
+    }
+
+    .container {
+        padding: 1rem;
+    }
+}
+    
+.restaurant-card {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin: 15px;
+    padding: 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.restaurant-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.restaurant-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.restaurant-link:hover {
+    transform: translateY(-5px);
+}
+
+.restaurant-link .restaurant-card {
+    cursor: pointer;
+}
+
+.restaurant-card h2 {
+    color: #333;
+    margin-bottom: 10px;
+    font-size: 1.5em;
+}
+
+.price {
+    font-size: 1.8em;
+    font-weight: bold;
+    margin: 10px 0;
+    color: #333;
+}
+
+.price-up {
+    color: #4CAF50;
+}
+
+.price-down {
+    color: #f44336;
+}
+
+.menu {
+    margin-top: 15px;
+}
+
+.menu h3 {
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.menu ul {
+    list-style: none;
+    padding: 0;
+}
+
+.menu li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.menu li:last-child {
+    border-bottom: none;
+}
+
+.item-name {
+    color: #444;
+}
+
+.item-price {
+    color: #666;
+    font-weight: bold;
+}
+
+/* News Slider Styles */
+.news-slider {
+    background: linear-gradient(90deg, #ff6b6b, #ff8e8e);
+    color: white;
+    padding: 15px 0;
+    overflow: hidden;
+    margin-bottom: 30px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.news-container {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    width: 100%;
+}
+
+.news-item {
+    flex: 0 0 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    padding: 0 20px;
+    min-width: 100%;
+}
+
+.news-item i {
+    font-size: 1.2em;
+    color: #fff;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 8px;
+    border-radius: 50%;
+}
+
+.news-item span {
+    font-size: 1.1em;
+    font-weight: 500;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+/* News Section Styles */
+.news-section {
+    padding: 2rem;
+    background: linear-gradient(135deg, #ff69b4, #ff1493);
+    margin-bottom: 2rem;
+    overflow: hidden;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+.news-section .section-title {
+    text-align: center;
+    color: white;
+    margin-bottom: 2rem;
+    font-size: 2rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.news-image {
+    height: 150px;
+    background: #f8f9fa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    border-bottom: 1px solid #eee;
+    overflow: hidden;
+}
+
+.news-image img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+    width: auto;
+    height: auto;
+}
+
+.news-card:hover .news-image img {
+    transform: scale(1.1);
+}
+
+.news-container {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    gap: 1rem;
+    padding: 1rem;
+    width: 100%;
+    will-change: transform;
+}
+
+.news-slider {
+    position: relative;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 1rem;
+}
+
+.news-card {
+    flex: 0 0 300px;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    margin: 0 10px;
+}
+
+.news-card:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.news-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.news-content {
+    padding: 1.5rem;
+    background: white;
+}
+
+.news-content h3 {
+    color: #333;
+    margin-bottom: 0.5rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.news-content h3 i {
+    margin-right: 8px;
+    color: #f84da8;
+}
+
+.news-content p {
+    color: #666;
+    margin-bottom: 1rem;
+    line-height: 1.4;
+    font-size: 0.95rem;
+}
+
+.news-time {
+    color: #888;
+    font-size: 0.85rem;
+    display: block;
+    font-style: italic;
+}
+
+.slider-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.9);
+    color: #ff69b4;
+    border: none;
+    padding: 1rem;
+    cursor: pointer;
+    font-size: 1.5rem;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    z-index: 10;
+}
+
+.slider-button:hover {
+    background: white;
+    transform: translateY(-50%) scale(1.1);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.slider-button.prev {
+    left: 0;
+}
+
+.slider-button.next {
+    right: 0;
+}
+
+/* Form Styles */
+.register-form, .login-form {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 30px;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.register-form h2, .login-form h2 {
+    text-align: center;
+    color: #f84da8;
+    margin-bottom: 30px;
+    font-size: 2rem;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #333;
+    font-weight: 500;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #f84da8;
+}
+
+.register-button, .login-button {
+    width: 100%;
+    padding: 12px;
+    background-color: #f84da8;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.register-button:hover, .login-button:hover {
+    background-color: #e63d8c;
+}
+
+.login-link, .register-link {
+    text-align: center;
+    margin-top: 20px;
+    color: #666;
+}
+
+.login-link a, .register-link a {
+    color: #f84da8;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.login-link a:hover, .register-link a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+    .register-form, .login-form {
+        margin: 20px;
+        padding: 20px;
+    }
+}
+
+/* Şifremi Unuttum Sayfası */
+.forgot-password-form {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 30px;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.forgot-password-form h2 {
+    text-align: center;
+    color: #f84da8;
+    margin-bottom: 20px;
+    font-size: 2rem;
+}
+
+.form-description {
+    text-align: center;
+    color: #666;
+    margin-bottom: 30px;
+    font-size: 1rem;
+}
+
+.back-to-login {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.back-to-login a {
+    color: #f84da8;
+    text-decoration: none;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.back-to-login a:hover {
+    text-decoration: underline;
+}
+
+.back-to-login i {
+    font-size: 0.9rem;
+}
+
+/* Şifre Sıfırlama Butonu */
+.reset-button {
+    width: 100%;
+    padding: 12px;
+    background-color: #f84da8;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.reset-button:hover {
+    background-color: #e63d8c;
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+    .forgot-password-form {
+        margin: 20px;
+        padding: 20px;
+    }
+}
+
+.user-profile {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.profile-circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #ff69b4;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.profile-circle:hover {
+    transform: scale(1.1);
+}
+
+.profile-menu {
+    display: none;
+    position: absolute;
+    top: 50px;
+    right: 0;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    min-width: 200px;
+    z-index: 1000;
+}
+
+.profile-info {
+    margin-bottom: 15px;
+}
+
+.profile-info p {
+    margin: 5px 0;
+    color: #333;
+}
+
+.logout-button {
+    width: 100%;
+    padding: 8px;
+    background-color: #ff69b4;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.logout-button:hover {
+    background-color: #ff1493;
+}
+
+@media (max-width: 768px) {
+    .profile-menu {
+        right: -50px;
+    }
+} 

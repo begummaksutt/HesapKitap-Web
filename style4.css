@@ -1,0 +1,132 @@
+/* ... existing code ... */
+
+/* Tavuk Döner Sayfası Stilleri */
+body {
+    background-color: #f84da8;  /* Pembe arka plan */
+}
+.navbar {
+    background-color: white;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px #ddd;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+}
+/* ... existing code ... */
+.logo {
+    height:40px;
+    width:120px;
+}
+/* Tavuk Döner Sayfası Stilleri */
+.menu-container {
+    display: flex;
+    flex-direction: row;  /* Dikey yerine yatay düzen */
+    gap: 2rem;
+    align-items: center;
+    justify-content: center;  /* Kutuları yatayda ortala */
+    padding: 2rem;
+    flex-wrap: wrap;  /* Ekran küçüldüğünde alt satıra geç */
+}
+
+.menu-box {
+    background-color: white;
+    border-radius: 20px;
+    padding: 2rem;
+    width: calc(33.33% - 2rem);  /* Her kutu ekranın 1/3'ü kadar */
+    min-width: 300px;  /* Minimum genişlik */
+    text-align: center;
+    box-shadow: 0 4px 6px #ddd;
+    transition: transform 0.3s;
+    flex: 1;  /* Kutuları eşit genişlikte yap */
+}
+.menu-image {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+    border-radius: 15px;
+    margin-bottom: 1.5rem;
+}
+
+.menu-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s;
+}
+
+.menu-box:hover .menu-image img {
+    transform: scale(1.05);
+}
+
+/* ... existing code ... */
+
+/* Responsive Tasarım */
+@media (max-width: 1200px) {
+    .menu-box {
+        width: calc(50% - 2rem);  /* Orta boy ekranlarda 2 sütun */
+    }
+    .menu-image {
+        height: 180px;
+    }
+}
+
+@media (max-width: 768px) {
+    .menu-container {
+        flex-direction: column;  /* Mobilde dikey düzen */
+    }
+    
+    .menu-box {
+        width: 100%;  /* Mobilde tam genişlik */
+        min-width: auto;
+    }
+    .menu-image {
+        height: 160px;
+    }
+}
+
+/* ... existing code ... */
+/* Responsive Tasarım */
+@media (max-width: 768px) {
+    .menu-box {
+        padding: 1.5rem;
+    }
+
+    .menu-title {
+        font-size: 2rem;
+    }
+
+    .menu-subtitle {
+        font-size: 1.2rem;
+    }
+
+    .price-button {
+        font-size: 1.2rem;
+        padding: 0.8rem 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .menu-box {
+        padding: 1rem;
+    }
+
+    .menu-title {
+        font-size: 1.8rem;
+    }
+
+    .menu-subtitle {
+        font-size: 1.1rem;
+    }
+
+    .price-button {
+        font-size: 1.1rem;
+        padding: 0.7rem 1.2rem;
+    }
+}
+
+/* ... existing code ... */

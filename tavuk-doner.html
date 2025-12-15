@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HesapKitap - Tavuk & Döner</title>
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-left">
+            <img src="/logo/hklogo2.png" alt="HesapKitap Logo" class="logo">
+        </div>
+        <div class="nav-right">
+            <div id="userProfile" class="user-profile" style="display: none;">
+                <div class="profile-circle" onclick="toggleProfileMenu()">
+                    <span id="userInitial"></span>
+                </div>
+                <div class="profile-menu" id="profileMenu">
+                    <div class="profile-info">
+                        <p><strong>Ad Soyad:</strong> <span id="userFullName"></span></p>
+                        <p><strong>E-posta:</strong> <span id="userEmail"></span></p>
+                    </div>
+                    <button onclick="logout()" class="logout-button">Çıkış Yap</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1 class="page-title">Tavuk & Döner Restoranları</h1>
+        <div id="restaurantList" class="restaurant-list">
+            <!-- Restoranlar buraya dinamik olarak eklenecek -->
+        </div>
+    </div>
+
+    <style>
+    .category-title {
+        text-align: center;
+        color: #e74c3c;
+        margin: 30px 0;
+        font-size: 2.5em;
+    }
+
+    .restaurant-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 20px;
+        padding: 20px;
+    }
+
+    .restaurant-card {
+        background: white;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+    }
+
+    .restaurant-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .restaurant-name {
+        color: #e74c3c;
+        font-size: 1.5em;
+        margin-bottom: 10px;
+    }
+
+    .price-tag {
+        font-size: 1.8em;
+        font-weight: bold;
+        color: #e74c3c;
+        margin: 10px 0;
+    }
+
+    .price-change {
+        display: inline-block;
+        padding: 5px 10px;
+        border-radius: 5px;
+        font-weight: bold;
+        margin-left: 10px;
+    }
+
+    .price-change.positive {
+        background-color: #27ae60;
+        color: white;
+    }
+
+    .price-change.negative {
+        background-color: #e74c3c;
+        color: white;
+    }
+
+    .last-update {
+        font-size: 0.9em;
+        color: #666;
+        margin: 10px 0;
+    }
+
+    .menu-items {
+        margin-top: 15px;
+        padding: 15px;
+        background: #f8f9fa;
+        border-radius: 8px;
+    }
+
+    .menu-item {
+        display: flex;
+        justify-content: space-between;
+        padding: 8px 0;
+        border-bottom: 1px solid #eee;
+    }
+
+    .menu-item:last-child {
+        border-bottom: none;
+    }
+
+    .menu-item-name {
+        font-weight: bold;
+    }
+
+    .menu-item-price {
+        color: #e74c3c;
+    }
+
+    .loading {
+        text-align: center;
+        padding: 40px;
+        font-size: 1.2em;
+        color: #666;
+    }
+
+    .error {
+        text-align: center;
+        padding: 40px;
+        color: #e74c3c;
+        font-size: 1.2em;
+    }
+    </style>
+
+    <script>
+        // Kullanıcı giriş durumunu kontrol et
+        function checkLoginStatus() {
+            fetch('/api/check-login')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.loggedIn) {
+                        // Giriş yapılmışsa profil bilgilerini göster
+                        document.getElementById('userProfile').style.display = 'flex';
+                        document.getElementById('userInitial').textContent = data.user.firstName.charAt(0);
+                        document.getElementById('userFullName').textContent = `${data.user.firstName} ${data.user.lastName}`;
+                        document.getElementById('userEmail').textContent = data.user.email;
+                        // Restoranları göster
+                        showRestaurants('tavuk-doner');
+                    } else {
+                        // Giriş yapılmamışsa ana sayfaya yönlendir
+                        window.location.href = '/';
+                    }
+                })
+                .catch(error => {
+                    console.error('Giriş durumu kontrolü hatası:', error);
+                    window.location.href = '/';
+                });
+        }
+
+        // Profil menüsünü aç/kapat
+        function toggleProfileMenu() {
+            const menu = document.getElementById('profileMenu');
+            menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+        }
+
+        // Çıkış yap
+        function logout() {
+            fetch('/api/logout', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                window.location.href = '/yeni-sayfa1.html';
+            })
+            .catch(error => {
+                console.error('Çıkış hatası:', error);
+                window.location.href = '/yeni-sayfa1.html';
+            });
+        }
+
+        // Restoranları göster
+        async function showRestaurants(category) {
+            const restaurantList = document.getElementById('restaurantList');
+            restaurantList.style.display = 'block';
+            restaurantList.innerHTML = '<div class="loading">Yükleniyor...</div>';
+
+            try {
+                const response = await fetch(`/api/restaurants/${category}`);
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const restaurants = await response.json();
+
+                let html = '';
+                restaurants.forEach(restaurant => {
+                    html += `
+                        <a href="${restaurant.url}" target="_blank" class="restaurant-link">
+                            <div class="restaurant-card">
+                                <h3>${restaurant.name}</h3>
+                                <div class="price-tag">${restaurant.price}</div>
+                                <div class="last-update">Son güncelleme: ${new Date(restaurant.lastUpdate).toLocaleString()}</div>
+                                <div class="menu-items">
+                                    ${restaurant.menu ? restaurant.menu.map(item => `
+                                        <div class="menu-item">
+                                            <span>${item.name}</span>
+                                            <span>${item.price}</span>
+                                        </div>
+                                    `).join('') : ''}
+                                </div>
+                            </div>
+                        </a>
+                    `;
+                });
+
+                restaurantList.innerHTML = html;
+            } catch (error) {
+                console.error('Error fetching restaurants:', error);
+                restaurantList.innerHTML = '<div class="error">Restoranlar yüklenirken bir hata oluştu.</div>';
+            }
+        }
+
+        // Sayfa yüklendiğinde giriş durumunu kontrol et
+        document.addEventListener('DOMContentLoaded', checkLoginStatus);
+    </script>
+</body>
+</html> 

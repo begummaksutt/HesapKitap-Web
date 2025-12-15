@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Yapay Zeka Analizi - HesapKitap</title>
+  <link rel="stylesheet" href="neyesem.css"> <!-- CSS buraya bağlanıyor -->
+  <style>
+    /* Added some basic styles for the AI analysis section */
+    body {
+        font-family: sans-serif; /* Use a common font */
+        line-height: 1.6;
+        margin: 0;
+        padding: 20px;
+        background-color: #ffd1dc; /* Light pink background */
+    }
+    .container {
+       max-width: 800px; /* Max width for content */
+       margin: 20px auto; /* Center the container and add vertical margin */
+       background-color: #fff5f7; /* Very light pink background for the analysis section */
+       padding: 20px;
+       border-radius: 8px;
+       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    .analysis-header {
+        display: flex;
+        justify-content: space-between; /* Space between title and button */
+        align-items: center;
+        margin-bottom: 20px;
+         border-bottom: 2px solid #ffb6c1; /* Pink separator line */
+         padding-bottom: 15px;
+    }
+    .analysis-title {
+      color: #ff69b4; /* Pink color */
+      font-size: 2em;
+      margin: 0; /* Remove default margin */
+    }
+    .refresh-button {
+        background-color: #ff69b4; /* Pink button color */
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 1em;
+        transition: background-color 0.3s ease;
+    }
+    .refresh-button:hover {
+        background-color: #ff1493; /* Darker pink on hover */
+    }
+    .analysis-results div {
+      margin-bottom: 15px;
+      padding: 10px;
+      border-bottom: 1px solid #ffb6c1;
+    }
+     .analysis-results div:last-child {
+        border-bottom: none;
+     }
+    .analysis-category {
+      font-weight: bold;
+      color: #ff1493;
+      margin-bottom: 5px;
+    }
+    .analysis-item {
+      font-size: 1.1em;
+      color: #ff69b4;
+    }
+    .loading-analysis, .error-analysis {
+        text-align: center;
+        padding: 20px;
+        font-size: 1.1em;
+        color: #ff69b4;
+    }
+     .error-analysis {
+        color: #ff1493;
+     }
+  </style>
+</head>
+<body>
+
+  <!-- AI Analysis Section -->
+  <div class="container">
+    <div class="ai-analysis-section">
+      <div class="analysis-header">
+        <h2 class="analysis-title">Yapay Zeka Analizi: En Uygun Fiyatlı Seçenekler</h2>
+        <button id="refreshAnalysisButton" class="refresh-button">Yenile</button>
+      </div>
+      <div id="analysisResults" class="analysis-results">
+        <div class="loading-analysis">Analiz yükleniyor...</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const categories = [
+      { key: 'tavuk-doner', title: 'Tavuk Döner' },
+      { key: 'pizza', title: 'Pizza' },
+      { key: 'kebap', title: 'Kebap' },
+      { key: 'burger', title: 'Burger' },
+    ];
+    const analysisResultsDiv = document.getElementById('analysisResults');
+    const refreshButton = document.getElementById('refreshAnalysisButton');
+
+    async function fetchRestaurants(category) {
+      try {
+        const response = await fetch(`/api/restaurants/${category}`);
+        if (!response.ok) {
+           let errorMessage = 'Veri çekilemedi.';
+            try {
+                const errorBody = await response.json();
+                if (errorBody && errorBody.message) {
+                    errorMessage = `Backend hatası: ${errorBody.message}`;
+                } else if (errorBody && errorBody.error) {
+                     errorMessage = `Backend hatası: ${errorBody.error}`;
+                }
+            } catch (e) {
+                 // Ignore JSON parsing error
+            }
+          throw new Error(`${errorMessage} (Durum kodu: ${response.status})`);
+        }
+        const data = await response.json();
+        return data;
+      } catch (error) {
+        console.error(`Error fetching ${category} restaurants:`, error);
+        throw error; // Re-throw to be caught by the main analysis function
+      }
+    }
+
+    function findMostAffordable(restaurants) {
+      if (!restaurants || restaurants.length === 0) {
+        return null;
+      }
+
+      let mostAffordableRestaurant = null;
+      let minPrice = Infinity;
+
+      restaurants.forEach(restaurant => {
+        // Convert price string (₺XXX,XX) to number
+        const priceString = restaurant.price.replace('₺', '').replace(',', '.');
+        const price = parseFloat(priceString);
+
+        if (!isNaN(price) && price < minPrice) {
+          minPrice = price;
+          mostAffordableRestaurant = restaurant;
+        }
+      });
+
+      return mostAffordableRestaurant;
+    }
+
+    async function updateAIAnalysis() {
+      analysisResultsDiv.innerHTML = '<div class="loading-analysis">Analiz güncelleniyor...</div>';
+      let allResultsHtml = '';
+      let hasError = false;
+
+      for (const category of categories) {
+        try {
+          const restaurants = await fetchRestaurants(category.key);
+          const mostAffordable = findMostAffordable(restaurants);
+
+          if (mostAffordable) {
+            allResultsHtml += `
+              <div>
+                <div class="analysis-category">${category.title}</div>
+                <div class="analysis-item">En uygun: ${mostAffordable.name} - ${mostAffordable.price}</div>
+              </div>
+            `;
+          } else {
+             allResultsHtml += `
+              <div>
+                <div class="analysis-category">${category.title}</div>
+                <div class="analysis-item">Bu kategoride uygun seçenek bulunamadı.</div>
+              </div>
+            `;
+          }
+        } catch (error) {
+          hasError = true;
+           allResultsHtml += `
+              <div>
+                <div class="analysis-category">${category.title}</div>
+                <div class="error-analysis">Veri çekilirken hata oluştu: ${error.message}</div>
+              </div>
+            `;
+        }
+      }
+      
+      if (hasError) {
+           analysisResultsDiv.innerHTML = allResultsHtml;
+      } else if (allResultsHtml === '') {
+           analysisResultsDiv.innerHTML = '<div class="error-analysis">Analiz sonuçları alınamadı.</div>';
+      } else {
+           analysisResultsDiv.innerHTML = allResultsHtml;
+      }
+    }
+
+    // Update analysis on page load
+    document.addEventListener('DOMContentLoaded', updateAIAnalysis);
+
+    // Update analysis every 1 minute (60000 milliseconds)
+    setInterval(updateAIAnalysis, 60000);
+
+    // Add event listener for the refresh button
+    refreshButton.addEventListener('click', updateAIAnalysis);
+
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,161 @@
+.container {
+    padding: 1rem;
+}
+*
+  
+.logo {
+    height:40px;
+    width:120px;
+}
+body {
+    background-image: url("logo/arkap.png");
+    background-size: cover;      
+    
+    
+  }
+/* Giriş Sayfası Stilleri */
+.navbar {
+    background-color: white;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+}
+
+.welcome-title {
+color: #f84da8;
+font-size: 2.5rem;
+text-align: center;
+margin-bottom: 0.5rem;
+}
+
+.welcome-subtitle {
+color: #666;
+text-align: center;
+margin-bottom: 2rem;
+font-size: 1.1rem;
+}
+
+.login-form {
+display: flex;
+flex-direction: column;
+gap: 1.5rem;
+}
+
+.form-group {
+display: flex;
+flex-direction: column;
+gap: 0.5rem;
+}
+
+.form-group label {
+color: #333;
+font-weight: 600;
+}
+
+.input-group {
+position: relative;
+display: flex;
+align-items: center;
+}
+
+.input-group i {
+position: absolute;
+left: 15px;
+color: #666;
+}
+
+.input-group input {
+width: 200px;
+padding: 12px 15px 12px 45px;
+border: 1px solid #ddd;
+border-radius: 8px;
+font-size: 1rem;
+transition: border-color 0.3s;
+
+
+}
+
+.input-group input:focus {
+outline: none;
+border-color: #f84da8;
+}
+
+.form-options {
+display: flex;
+justify-content: space-between;
+align-items: center;
+font-size: 0.9rem;
+text-align: center;
+}
+
+.remember-me {
+display: flex;
+align-items: center;
+gap: 0.5rem;
+color: #666;
+}
+
+.forgot-password {
+color: #f84da8;
+text-decoration: none;
+}
+
+.forgot-password:hover {
+text-decoration: underline;
+}
+
+.login-submit {
+background-color: #f84da8;
+color: white;
+border: none;
+padding: 12px;
+border-radius: 8px;
+width: 260px;
+font-size: 1.1rem;
+font-weight: 600;
+cursor: pointer;
+transition: background-color 0.3s;
+}
+
+.login-submit:hover {
+background-color: #0056b3;
+}
+
+.register-link {
+text-align: center;
+color: #666;
+font-size: 0.9rem;
+}
+
+.register-link a {
+color: #f84da8;
+text-decoration: none;
+font-weight: 600;
+}
+
+.register-link a:hover {
+text-decoration: underline;
+}
+
+/* Responsive Tasarım */
+@media (max-width: 480px) {
+.login-container {
+    margin: 1rem;
+    padding: 1.5rem;
+}
+
+.welcome-title {
+    font-size: 2rem;
+}
+
+.welcome-subtitle {
+    font-size: 1rem;
+}
+} 

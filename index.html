@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HesapKitap - En Ucuzu Keşfet</title>
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container hero-logo"> 
+    <img src="/logo/1111.png" alt="HesapKitap">
+    </div>
+    <nav class="navbar">
+        <div class="nav-left">
+            <img src="/logo/hklogo2.png" alt="HesapKitap Logo" class="logo">
+        </div>
+        <div class="nav-right">
+            <div id="userProfile" class="user-profile" style="display: none;">
+                <div class="profile-circle" onclick="toggleProfileMenu()">
+                    <span id="userInitial"></span>
+                </div>
+                <div class="profile-menu" id="profileMenu">
+                    <div class="profile-info">
+                        <p><strong>Ad Soyad:</strong> <span id="userFullName"></span></p>
+                        <p><strong>E-posta:</strong> <span id="userEmail"></span></p>
+                    </div>
+                    <button onclick="logout()" class="logout-button">Çıkış Yap</button>
+                </div>
+            </div>
+            <a href="/yeni-sayfa1.html" id="loginButton" class="login-button">Giriş Yap</a>
+        </div>
+    </nav>
+
+    <div class="news-section">
+        <h2 class="section-title">Güncel İndirimler</h2>
+        <div class="news-slider">
+            <div class="news-container">
+                <div class="news-card">
+                    <a href="https://www.yemeksepeti.com" target="_blank" class="news-link">
+                        <div class="news-image">
+                            <img src="/logo/yemeksepeti.png" alt="Yemeksepeti">
+                        </div>
+                        <div class="news-content">
+                            <h3><i class="fas fa-utensils"></i> Yemeksepeti</h3>
+                            <p>Bugün tüm restoranlarda %20 indirim!</p>
+                            <span class="news-time">1 saat önce</span>
+                        </div>
+                    </a>
+                </div>
+                <div class="news-card">
+                    <a href="https://www.getir.com" target="_blank" class="news-link">
+                        <div class="news-image">
+                            <img src="/logo/getir.jpeg" alt="Getir">
+                        </div>
+                        <div class="news-content">
+                            <h3><i class="fas fa-shopping-bag"></i> Getir</h3>
+                            <p>İlk siparişe özel %30 indirim!</p>
+                            <span class="news-time">2 saat önce</span>
+                        </div>
+                    </a>
+                </div>
+                <div class="news-card">
+                    <a href="https://www.trendyol.com/yemek" target="_blank" class="news-link">
+                        <div class="news-image">
+                            <img src="/logo/trendyolyemek/trendyol yemekk.png" alt="Trendyol Yemek">
+                        </div>
+                        <div class="news-content">
+                            <h3><i class="fas fa-shopping-cart"></i> Trendyol Yemek</h3>
+                            <p>Seçili restoranlarda %25 indirim!</p>
+                            <span class="news-time">3 saat önce</span>
+                        </div>
+                    </a>
+                </div>
+                <div class="news-card">
+                    <a href="https://www.migros.com.tr/yemek" target="_blank" class="news-link">
+                        <div class="news-image">
+                            <img src="/logo/migros.png" alt="Migros Yemek">
+                        </div>
+                        <div class="news-content">
+                            <h3><i class="fas fa-store"></i> Migros Yemek</h3>
+                            <p>100 TL üzeri siparişlere ücretsiz teslimat!</p>
+                            <span class="news-time">4 saat önce</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <button class="slider-button prev" onclick="slideNews('prev')">❮</button>
+            <button class="slider-button next" onclick="slideNews('next')">❯</button>
+        </div>
+    </div>
+
+    <div class="container">
+        <header>
+            <div class="scrolling-text-container">
+                <p class="scrolling-text">HesapKitap ile en ucuzu keşfet!</p>
+            </div>
+        </header>
+
+        <section class="main-buttons">
+            <a href="/neyesem.html"><button class="blue-button">Ne yesem</button></a>
+            <a href="/indirimlirestoranlar.html"><button class="blue-button">İndirimli restoranlar</button></a>
+            <a href="/yıldızrestoranlar.html"><button class="blue-button">Yıldız restoranlar</button></a>
+        </section>
+
+        <section class="cuisines">
+            <h2 class="section-title">Mutfaklar</h2>
+            <div class="cuisine-buttons">
+                <button class="gray-button" data-category="tavuk-doner">
+                    <i class="fas fa-drumstick-bite"></i>
+                    <span>Tavuk & Döner</span>
+                </button>
+                <button class="gray-button" data-category="pizza">
+                    <i class="fas fa-pizza-slice"></i>
+                    <span>Pizza</span>
+                </button>
+                <button class="gray-button" data-category="kebap">
+                    <i class="fas fa-utensils"></i>
+                    <span>Kebap</span>
+                </button>
+                <button class="gray-button" data-category="burger">
+                    <i class="fas fa-hamburger"></i>
+                    <span>Burger</span>
+                </button>
+            </div>
+        </section>
+    </div>
+
+    <div id="restaurantList" class="restaurant-list">
+        <!-- Restoranlar buraya dinamik olarak eklenecek -->
+    </div>
+
+    <style>
+    .restaurant-list {
+        display: none;
+        margin-top: 20px;
+        padding: 20px;
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .restaurant-card {
+        background: white;
+        border-radius: 8px;
+        padding: 15px;
+        margin-bottom: 15px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s;
+    }
+
+    .restaurant-card:hover {
+        transform: translateY(-2px);
+    }
+
+    .price-tag {
+        color: #e74c3c;
+        font-weight: bold;
+        font-size: 1.2em;
+    }
+
+    .last-update {
+        font-size: 0.8em;
+        color: #666;
+    }
+
+    .price-change {
+        color: #27ae60;
+        font-weight: bold;
+    }
+
+    .price-change.negative {
+        color: #e74c3c;
+    }
+
+    .loading {
+        text-align: center;
+        padding: 20px;
+        color: #666;
+    }
+
+    .error {
+        text-align: center;
+        padding: 20px;
+        color: #e74c3c;
+    }
+
+    .menu-items {
+        margin-top: 10px;
+        padding: 10px;
+        background: #f8f9fa;
+        border-radius: 5px;
+    }
+
+    .menu-item {
+        display: flex;
+        justify-content: space-between;
+        padding: 5px 0;
+        border-bottom: 1px solid #eee;
+    }
+
+    .menu-item:last-child {
+        border-bottom: none;
+    }
+
+    .gray-button.active {
+        background-color: #e74c3c;
+        color: white;
+    }
+
+    .gray-button {
+        cursor: pointer;
+        transition: all 0.3s ease;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        background-color: #f8f9fa;
+        color: #333;
+        font-size: 16px;
+        margin: 5px;
+    }
+
+    .gray-button:hover {
+        transform: scale(1.05);
+        background-color: #e74c3c;
+        color: white;
+    }
+
+    .cuisine-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 20px;
+    }
+
+    .hero-logo {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 10px 0;
+    }
+
+    .hero-logo img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    .cuisine-note {
+        margin-top: 12px;
+        font-size: 14px;
+        color: #666;
+        text-align: center;
+    }
+
+    .site-footer {
+        margin-top: 40px;
+        padding: 32px 16px;
+        background: #f8f9fa;
+        text-align: center;
+        color: #666;
+        font-size: 14px;
+    }
+
+    .site-footer .footer-text {
+        margin: 0;
+        line-height: 1.5;
+    }
+
+    /* Güncel indirimler kartları için görsel boyutları (logolar görünsün) */
+    .news-card {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .news-image {
+        width: 100%;
+        height: 120px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #f8f9fa;
+        padding: 12px;
+        box-sizing: border-box;
+    }
+
+    .news-image img {
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+        display: block;
+    }
+    </style>
+
+    <script>
+    let lastPrices = {};
+
+    async function showRestaurants(category) {
+        const restaurantList = document.getElementById('restaurantList');
+        restaurantList.style.display = 'block';
+        restaurantList.innerHTML = '<div class="loading">Yükleniyor...</div>';
+
+        try {
+            const response = await fetch(`/api/restaurants/${category}`);
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const restaurants = await response.json();
+
+            let html = '';
+            restaurants.forEach(restaurant => {
+                const priceChange = calculatePriceChange(restaurant);
+                html += `
+                    <div class="restaurant-card">
+                        <h3>${restaurant.name}</h3>
+                        <div class="price-tag">${restaurant.price}</div>
+                        ${priceChange ? `<div class="price-change ${priceChange < 0 ? 'negative' : ''}">
+                            ${priceChange > 0 ? '+' : ''}${priceChange}%
+                        </div>` : ''}
+                        <div class="last-update">Son güncelleme: ${new Date(restaurant.lastUpdate).toLocaleString()}</div>
+                        <div class="menu-items">
+                            ${restaurant.menu ? restaurant.menu.map(item => `
+                                <div class="menu-item">
+                                    <span>${item.name}</span>
+                                    <span>${item.price}</span>
+                                </div>
+                            `).join('') : ''}
+                        </div>
+                    </div>
+                `;
+            });
+
+            restaurantList.innerHTML = html;
+            updateLastPrices(restaurants);
+        } catch (error) {
+            console.error('Error fetching restaurants:', error);
+            restaurantList.innerHTML = '<div class="error">Restoranlar yüklenirken bir hata oluştu.</div>';
+        }
+    }
+
+    function calculatePriceChange(restaurant) {
+        if (!lastPrices[restaurant.name]) return null;
+        const oldPrice = parseFloat(lastPrices[restaurant.name].replace('₺', '').replace(',', '.'));
+        const newPrice = parseFloat(restaurant.price.replace('₺', '').replace(',', '.'));
+        const change = ((newPrice - oldPrice) / oldPrice) * 100;
+        return Math.round(change * 100) / 100;
+    }
+
+    function updateLastPrices(restaurants) {
+        restaurants.forEach(restaurant => {
+            lastPrices[restaurant.name] = restaurant.price;
+        });
+    }
+
+    // Buton tıklama olaylarını ekle
+    document.querySelectorAll('.gray-button').forEach(button => {
+        button.addEventListener('click', function() {
+            const category = this.getAttribute('data-category');
+            if (!category) return;
+
+            navigateToCategoryPage(category);
+        });
+    });
+
+    // Kategori sayfasına git (giriş kontrolü ile)
+    function navigateToCategoryPage(category) {
+        const pageMap = {
+            'tavuk-doner': '/tavuk-doner.html',
+            'pizza': '/pizza.html',
+            'kebap': '/kebap.html',
+            'burger': '/burger.html'
+        };
+
+        const targetPage = pageMap[category];
+        if (!targetPage) return;
+
+        checkLogin(targetPage);
+    }
+
+    // Sayfa yüklendiğinde ilk butonu sadece stil olarak aktif et
+    document.addEventListener('DOMContentLoaded', function() {
+        const firstButton = document.querySelector('.gray-button[data-category]');
+        if (firstButton) {
+            firstButton.classList.add('active');
+        }
+    });
+    </script>
+
+    <script>
+        // Kayan yazı animasyonu
+        document.addEventListener('DOMContentLoaded', function() {
+            const slidingText = document.querySelector('.sliding-text');
+            slidingText.style.animation = 'slideIn 1s ease-out forwards';
+        });
+    </script>
+
+    <script>
+        // News slider functionality
+        let currentSlide = 0;
+        const slideWidth = 300; // Width of each news card
+        const newsContainer = document.querySelector('.news-container');
+        const totalSlides = document.querySelectorAll('.news-card').length;
+
+        function slideNews(direction) {
+            if (direction === 'next') {
+                currentSlide = (currentSlide + 1) % totalSlides;
+            } else {
+                currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+            }
+            
+            // Smooth transition
+            newsContainer.style.transition = 'transform 0.5s ease-in-out';
+            newsContainer.style.transform = `translateX(-${currentSlide * slideWidth}px)`;
+            
+            // Reset position after transition
+            setTimeout(() => {
+                if (currentSlide === totalSlides - 1 && direction === 'next') {
+                    newsContainer.style.transition = 'none';
+                    currentSlide = 0;
+                    newsContainer.style.transform = `translateX(0)`;
+                } else if (currentSlide === 0 && direction === 'prev') {
+                    newsContainer.style.transition = 'none';
+                    currentSlide = totalSlides - 1;
+                    newsContainer.style.transform = `translateX(-${(totalSlides - 1) * slideWidth}px)`;
+                }
+            }, 500);
+        }
+
+        // Auto slide every 5 seconds
+        setInterval(() => slideNews('next'), 5000);
+
+        // News update functionality
+        const providerLogos = {
+            'Yemeksepeti': '/logo/yemeksepeti.png',
+            'Getir': '/logo/getir.jpeg',
+            'Trendyol Yemek': '/logo/trendyolyemek/trendyol yemekk.png',
+            'Migros Yemek': '/logo/migros.png'
+        };
+
+        function getProviderLogo(title) {
+            if (!title) return null;
+            return providerLogos[title] || null;
+        }
+
+        function updateNews() {
+            fetch('/api/news')
+                .then(response => response.json())
+                .then(data => {
+                    const newsCards = document.querySelectorAll('.news-card');
+                    newsCards.forEach((card, index) => {
+                        if (data[index]) {
+                            const link = card.querySelector('.news-link');
+                            const image = card.querySelector('.news-image img');
+                            const title = card.querySelector('.news-content h3');
+                            const content = card.querySelector('.news-content p');
+                            const time = card.querySelector('.news-time');
+
+                            link.href = data[index].url;
+                            if (data[index].image) {
+                            const fallbackLogo = getProviderLogo(data[index].title);
+                            image.src = data[index].image || fallbackLogo || image.src;
+                            image.onerror = () => {
+                                if (fallbackLogo) image.src = fallbackLogo;
+                            };
+                            }
+                            image.alt = data[index].title;
+                            // İkonları koruyarak başlığı güncelle
+                            const iconMap = {
+                                'Yemeksepeti': '<i class="fas fa-utensils"></i>',
+                                'Getir': '<i class="fas fa-shopping-bag"></i>',
+                                'Trendyol Yemek': '<i class="fas fa-shopping-cart"></i>',
+                                'Migros Yemek': '<i class="fas fa-store"></i>'
+                            };
+                            const icon = iconMap[data[index].title] || '';
+                            title.innerHTML = icon ? `${icon} ${data[index].title}` : data[index].title;
+                            content.textContent = data[index].text;
+                            time.textContent = data[index].time;
+                        }
+                    });
+                })
+                .catch(error => console.error('Error fetching news:', error));
+        }
+
+        // Update news every minute
+        setInterval(updateNews, 60000);
+
+        // Initial update
+        updateNews();
+    </script>
+
+    <script>
+        // Kullanıcı giriş durumunu kontrol et
+        function checkLoginStatus() {
+            fetch('/api/check-login')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.loggedIn) {
+                        // Giriş yapılmışsa profil bilgilerini göster
+                        document.getElementById('loginButton').style.display = 'none';
+                        document.getElementById('userProfile').style.display = 'flex';
+                        document.getElementById('userInitial').textContent = data.user.firstName.charAt(0);
+                        document.getElementById('userFullName').textContent = `${data.user.firstName} ${data.user.lastName}`;
+                        document.getElementById('userEmail').textContent = data.user.email;
+                    } else {
+                        // Giriş yapılmamışsa giriş butonunu göster
+                        document.getElementById('loginButton').style.display = 'block';
+                        document.getElementById('userProfile').style.display = 'none';
+                    }
+                })
+                .catch(error => {
+                    console.error('Giriş durumu kontrolü hatası:', error);
+                });
+        }
+
+        // Profil menüsünü aç/kapat
+        function toggleProfileMenu() {
+            const menu = document.getElementById('profileMenu');
+            menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+        }
+
+        // Çıkış yap
+        function logout() {
+            fetch('/api/logout', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                window.location.href = '/yeni-sayfa1.html';
+            })
+            .catch(error => {
+                console.error('Çıkış hatası:', error);
+                window.location.href = '/yeni-sayfa1.html';
+            });
+        }
+
+        // Sayfa yüklendiğinde giriş durumunu kontrol et
+        document.addEventListener('DOMContentLoaded', function() {
+            checkLoginStatus();
+            // Her 30 saniyede bir giriş durumunu kontrol et
+            setInterval(checkLoginStatus, 30000);
+        });
+
+        // Giriş kontrolü fonksiyonu (diğer sayfalar için kullanılabilir)
+        function checkLogin(page) {
+            fetch('/api/check-login')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.loggedIn) {
+                        // Giriş yapılmışsa sayfaya yönlendir
+                        window.location.href = page;
+                    } else {
+                        // Giriş yapılmamışsa uyarı ver ve giriş sayfasına yönlendir
+                        alert('Bu özelliği kullanmak için giriş yapmalısınız!');
+                        window.location.href = '/yeni-sayfa1.html';
+                    }
+                })
+                .catch(error => {
+                    console.error('Giriş kontrolü hatası:', error);
+                    alert('Bir hata oluştu. Lütfen tekrar deneyin.');
+                });
+        }
+    </script>
+    <footer class="site-footer">
+        <p class="footer-text">© 2025 HesapKitap Tüm hakları saklıdır.</p>
+    </footer>
+</body>
+</html>
